@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" %>
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-	<meta charset="UTF-8">
-	<title>Todoリスト</title>
-	<jsp:include page="include.jsp"></jsp:include>
+<jsp:include page="include_css.jsp"></jsp:include>
 
 </head>
 <body>
+	<jsp:include page="include_header.jsp"></jsp:include>
 
 	<div class="container">
 	<!-- entry area -->

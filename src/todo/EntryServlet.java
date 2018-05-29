@@ -14,7 +14,7 @@ public class EntryServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		getServletContext().getRequestDispatcher("/entry.jsp").forward(req, resp);
+		getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp").forward(req, resp);
 	}
 
 	@Override

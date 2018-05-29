@@ -13,7 +13,7 @@ public class UpdateServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
-		getServletContext().getRequestDispatcher("/update.jsp").forward(req, resp);
+		getServletContext().getRequestDispatcher("/WEB-INF/update.jsp").forward(req, resp);
 	}
 
 	@Override
