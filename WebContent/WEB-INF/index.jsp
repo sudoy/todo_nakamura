@@ -1,9 +1,4 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
-<!DOCTYPE html>
-<html lang="ja">
-<jsp:include page="include_css.jsp"></jsp:include>
-
-<body>
 <jsp:include page="include_header.jsp"></jsp:include>
 
 	<div class="container">
@@ -51,5 +46,4 @@
 	</div>
 	<!-- end main -->
 
-</body>
-</html>
+<jsp:include page="include_footer.jsp"></jsp:include>
