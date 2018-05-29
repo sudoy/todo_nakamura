@@ -1,7 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<!DOCTYPE html>
+<html lang="ja">
 <jsp:include page="include_css.jsp"></jsp:include>
 
-</head>
 <body>
 <jsp:include page="include_header.jsp"></jsp:include>
 
