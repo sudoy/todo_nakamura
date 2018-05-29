@@ -18,7 +18,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-sm-2 control-label" for="priority">重要度</label>
+				<label class="col-sm-2 control-label">重要度</label>
 				<div class="col-sm-10">
 					<div class="radio">
 					<label>
