@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import todo.beans.Todo;
+import todo.utils.DBUtils;
+
 
 @WebServlet("/index.html")
 public class IndexServlet extends HttpServlet {

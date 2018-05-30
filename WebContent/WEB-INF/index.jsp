@@ -1,4 +1,4 @@
-<%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" import="todo.HTMLUtils" %>
+<%@ page contentType="text/html; charset=UTF-8" import="todo.utils.HTMLUtils" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include_header.jsp"></jsp:include>
 
@@ -21,7 +21,7 @@
 					<td>${todo.id}</td>
 					<td><a href="update.html?id=${todo.id}">${todo.title}</a></td>
 					<td>${HTMLUtils.stars(todo.priority)}</td>
-					<td>${HTMLUtils.formating(todo.limit_day)}</td>
+					<td>${HTMLUtils.formating(todo.limitDay)}</td>
 				</tr>
 			</c:forEach>
 		<!-- loop end -->

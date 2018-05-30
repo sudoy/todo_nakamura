@@ -1,4 +1,4 @@
-package todo;
+package todo.utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -17,10 +17,10 @@ public class HTMLUtils {
 
 	}
 
-	public static String formating(Date limit_day) {
+	public static String formating(Date limitDay) {
 		// nullの場合、空白を返すようにする
-		if(limit_day != null) {
-			String str = new SimpleDateFormat("yyyy/MM/dd").format(limit_day);
+		if(limitDay != null) {
+			String str = new SimpleDateFormat("yyyy/MM/dd").format(limitDay);
 			return str;
 		} else {
 			return "";

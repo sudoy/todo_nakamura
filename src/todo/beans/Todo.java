@@ -1,4 +1,4 @@
-package todo;
+package todo.beans;
 
 import java.sql.Date;
 
@@ -9,16 +9,16 @@ public class Todo {
 	private String title;
 	private String detail;
 	private int priority;
-	private Date limit_day;
+	private Date limitDay;
 
 
-	public Todo(int id, String title, String detail, int priority, Date limit_day) {
+	public Todo(int id, String title, String detail, int priority, Date limitDay) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.detail = detail;
 		this.priority = priority;
-		this.limit_day = limit_day;
+		this.limitDay = limitDay;
 	}
 
 	public int getId() {
@@ -49,11 +49,11 @@ public class Todo {
 		this.priority = priority;
 	}
 
-	public Date getLimit_day() {
-		return limit_day;
+	public Date getLimitDay() {
+		return limitDay;
 	}
-	public void setLimit_day(Date limit_day) {
-		this.limit_day = limit_day;
+	public void setLimitDay(Date limitDay) {
+		this.limitDay = limitDay;
 	}
 
 }
