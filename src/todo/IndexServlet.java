@@ -5,14 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
-import javax.naming.Context;
-import javax.naming.InitialContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.sql.DataSource;
 
 
 @WebServlet("/index.html")
@@ -25,10 +22,7 @@ public class IndexServlet extends HttpServlet {
 		ResultSet rs = null;
 
 		try {
-			Context initContext = new InitialContext();
-		    Context envContext  = (Context)initContext.lookup("java:/comp/env");
-		    DataSource ds = (DataSource)envContext.lookup("todolist_nakamura");
-		    con = ds.getConnection();
+			con = DBUtils.getConnection();
 			// SQL
 			sql = "SELECT id, title, priority, limit_day FROM todolist ORDER BY id";
 			// SELECT命令の準備
@@ -36,7 +30,6 @@ public class IndexServlet extends HttpServlet {
 			// 実行
 			rs = ps.executeQuery();
 
-			// ここをやりたくないからJavaBeansに置き換える
 			req.setAttribute("rs", rs);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
@@ -51,9 +44,7 @@ public class IndexServlet extends HttpServlet {
 				if (ps != null) {
 					ps.close();
 				}
-				if (con != null) {
-					con.close();
-				}
+				DBUtils.close(con);
 			} catch (Exception e) {
 
 			}
