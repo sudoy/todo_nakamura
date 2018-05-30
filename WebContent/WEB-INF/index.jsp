@@ -1,7 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" %>
-<%
-	ResultSet rs = (ResultSet) request.getAttribute("rs");
-%>
+<%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" import="todo.HTMLUtils" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include_header.jsp"></jsp:include>
 
 	<div class="container">
@@ -17,18 +15,16 @@
 			</tr>
 			</thead>
 			<tbody>
-				<%
-					while (rs.next()) {
-				%>
+		<!-- loop start -->
+			<c:forEach var="todo" items="${list}">
 				<tr>
-					<td><%=rs.getString("id")%></td>
-					<td><a href="update.html?id=<%=rs.getString("id")%>"><%=rs.getString("title")%></a></td>
-					<td><%=rs.getString("priority")%></td>
-					<td><%=rs.getString("limit_day")%></td>
+					<td>${todo.id}</td>
+					<td><a href="update.html?id=${todo.id}">${todo.title}</a></td>
+					<td>${HTMLUtils.stars(todo.priority)}</td>
+					<td>${HTMLUtils.formating(todo.limit_day)}</td>
 				</tr>
-				<%
-					}
-				%>
+			</c:forEach>
+		<!-- loop end -->
 			</tbody>
 			</table>
 		</div>

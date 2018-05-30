@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -24,13 +26,25 @@ public class IndexServlet extends HttpServlet {
 		try {
 			con = DBUtils.getConnection();
 			// SQL
-			sql = "SELECT id, title, priority, limit_day FROM todolist ORDER BY id";
+			sql = "SELECT id, title, detail, priority, limit_day FROM todolist ORDER BY id";
 			// SELECT命令の準備
 			ps = con.prepareStatement(sql);
 			// 実行
 			rs = ps.executeQuery();
 
-			req.setAttribute("rs", rs);
+			List<Todo> list = new ArrayList<>();
+			while(rs.next()) {
+				Todo a = new Todo(
+						rs.getInt("id"),
+						rs.getString("title"),
+						rs.getString("detail"),
+						rs.getInt("priority"),
+						rs.getDate("limit_day"));
+
+				list.add(a);
+			}
+			// JavaBeansをJSPに渡す
+			req.setAttribute("list", list);
 
 			getServletContext().getRequestDispatcher("/WEB-INF/index.jsp").forward(req, resp);
 
