@@ -1,4 +1,7 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8" import="java.sql.*" %>
+<%
+	ResultSet rs = (ResultSet) request.getAttribute("rs");
+%>
 <jsp:include page="include_header.jsp"></jsp:include>
 
 	<div class="container">
@@ -14,30 +17,18 @@
 			</tr>
 			</thead>
 			<tbody>
-			<tr>
-			<td>1</td>
-			<td><a href="update.html">テスト</a></td>
-			<td>★</td>
-			<td>2015/06/20</td>
-			</tr>
-			<tr>
-			<td>2</td>
-			<td><a href="update.html">テストテスト</a></td>
-			<td>★★</td>
-			<td>2015/06/20</td>
-			</tr>
-			<tr>
-			<td>3</td>
-			<td><a href="update.html">テストテストテスト</a></td>
-			<td>★★★</td>
-			<td>2015/06/20</td>
-			</tr>
-			<tr>
-			<td>4</td>
-			<td><a href="update.html">テストテストテストテスト</a></td>
-			<td>★★</td>
-			<td>2015/06/20</td>
-			</tr>
+				<%
+					while (rs.next()) {
+				%>
+				<tr>
+					<td><%=rs.getString("id")%></td>
+					<td><a href="update.html?id=<%=rs.getString("id")%>"><%=rs.getString("title")%></a></td>
+					<td><%=rs.getString("priority")%></td>
+					<td><%=rs.getString("limit_day")%></td>
+				</tr>
+				<%
+					}
+				%>
 			</tbody>
 			</table>
 		</div>
