@@ -1,8 +1,11 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include_header.jsp"></jsp:include>
 
 	<div class="container">
 		<!-- entry area -->
+
+
 		<form class="form-horizontal" method="post" action="entry.html">
 		<h4 class="page-header"><strong>登録フォーム</strong></h4>
 			<div class="form-group">
@@ -45,7 +48,7 @@
 			</div>
 			<div class="form-group">
 				<div class="col-sm-offset-2 col-sm-10">
-					<input type="submit" class="btn btn-default" value="キャンセル"  onclick="history.back()">
+					<a class="btn btn-default" href="index.html" role="button">キャンセル</a>
 					<input type="submit" class="btn btn-primary" value="追加">
 				</div>
 			</div>

@@ -1,6 +1,6 @@
 package todo.beans;
 
-import java.sql.Date;
+import java.util.Date;
 
 // JavaBeans
 public class Todo {
@@ -15,6 +15,13 @@ public class Todo {
 	public Todo(int id, String title, String detail, int priority, Date limitDay) {
 		super();
 		this.id = id;
+		this.title = title;
+		this.detail = detail;
+		this.priority = priority;
+		this.limitDay = limitDay;
+	}
+
+	public Todo(String title, String detail, int priority, Date limitDay) {
 		this.title = title;
 		this.detail = detail;
 		this.priority = priority;
