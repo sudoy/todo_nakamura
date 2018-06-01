@@ -26,7 +26,7 @@
 			<div class="col-sm-10">
 				<div class="radio">
 					<label> <input type="radio" name="priority" value="3"
-						${HTMLUtils.check(param.priority, '3')}> ★★★
+						${HTMLUtils.check(param.priority, '3')} checked> ★★★
 					</label>
 				</div>
 				<div class="radio">
