@@ -26,35 +26,38 @@ public class EntryServlet extends HttpServlet {
 
 
 	//エラーチェック
-	private List<String> validate(String a, String b, String c){
+	private List<String> validate(String title, String detail, String priority, String limitDay){
 		List<String> errors = new ArrayList<String>();
 
 		// 題名のエラーチェック
-		if(a == null || a.trim().isEmpty()) {
+		if(title == null || title.trim().isEmpty()) {
 			errors.add("");
-		} else if(a.length() > 100) {
-			errors.add("");
-		}
-
-		// 詳細のエラーチェック
-		if(b == null || b.trim().isEmpty()) {
+		} else if(title.length() > 100) {
 			errors.add("");
 		}
 
-		// 問題児 日付一致チェック
-		if(c != null) {
+		// 詳細のエラーチェック、確認必須ではないが、NOTNULLのため
+		if(detail == null || detail.trim().isEmpty()) {
+			errors.add("");
+		}
+
+		// 重要度のエラーチェック、先にint型にキャストする
+		int priInt = Integer.parseInt(priority);
+		if(priInt < 1 || 3 < priInt) {
+			errors.add("");
+		}
+
+		// 日付一致チェック
+		if(limitDay != null) {
 			try {
 				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 				df.setLenient(false);
-				String s1 = c;
+				String s1 = limitDay;
 				String s2 = df.format(df.parse(s1));
-
-//			    ここなくても正常に動作する気がする
+//			    現在、ここの記述なくても動作可
 //			    if (s1.equals(s2)) {
-//
 //			    } else {
-//			    	System.out.println("D");
-//			    	errors.add("期限は「YYYY/MM/DD」形式で入力して下さい");
+//			    	errors.add("");
 //			    }
 			} catch (Exception p) {
 				p.printStackTrace();
@@ -74,6 +77,7 @@ public class EntryServlet extends HttpServlet {
 		EntryServlet error = new EntryServlet();
 		List<String> errors = error.validate(req.getParameter("title"),
 				req.getParameter("detail"),
+				req.getParameter("priority"),
 				req.getParameter("limitDay"));
 
 		if(errors.isEmpty()) {
