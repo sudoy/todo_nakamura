@@ -4,6 +4,10 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -49,6 +53,7 @@ public class UpdateServlet extends HttpServlet {
 					rs.getDate("limit_day"));
 
 			req.setAttribute("todo", todo);
+
 			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp").forward(req, resp);
 
 		} catch (Exception e) {
@@ -68,9 +73,121 @@ public class UpdateServlet extends HttpServlet {
 		}
 	}
 
+
+	//エラーチェック
+		private List<String> validate(String id, String title, String detail, String priority, String limitDay){
+			List<String> errors = new ArrayList<String>();
+
+			// idのエラーチェック（不正防止
+			// ここいまStringしてるからな！！気をつけろよ！！
+			if(id.equals("")) {
+				errors.add("存在しないIDです。");
+			}
+
+			// 題名のエラーチェック
+			if(title.equals("")) {
+				errors.add("題名は必須入力です。");
+			} else if(title.length() > 100) {
+				errors.add("題名は100文字以内にして下さい。");
+			}
+
+			// 詳細のエラーチェック、確認必須ではないが、NOTNULLのため
+			if(detail.equals("")) {
+				errors.add("詳細は必須入力です。");
+			}
+
+			// 重要度のエラーチェック（不正防止
+			if(!priority.equals("1") && !priority.equals("2") && !priority.equals("3")) {
+				errors.add("不正なアクセスです。");
+			}
+
+			// 日付一致チェック
+			if(!limitDay.equals("")) {
+				try {
+					DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+					df.setLenient(false);
+					String s1 = limitDay;
+					String s2 = df.format(df.parse(s1));
+				} catch (Exception p) {
+					p.printStackTrace();
+					errors.add("期限は「YYYY/MM/DD」形式で入力して下さい。");
+				}
+			}
+
+			return errors;
+		}
+
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
+		req.setCharacterEncoding("UTF-8");
+
+		// バリデーションチェック
+		UpdateServlet error = new UpdateServlet();
+		List<String> errors = error.validate(
+				req.getParameter("id"),
+				req.getParameter("title"),
+				req.getParameter("detail"),
+				req.getParameter("priority"),
+				req.getParameter("limitDay"));
+
+		if(errors.size() > 0) {
+			//errorリストに1つ以上、エラーが含まれていた場合
+			req.setAttribute("errors", errors);
+
+			for(String e : errors) {
+			System.out.println(e);
+			}
+			System.out.println(req.getParameter("limitDay"));
+
+			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp").forward(req, resp);
+		} else {
+			// エラーがなかった場合
+			Connection con = null;
+			PreparedStatement ps = null;
+			String sql = null;
+			try{
+				con = DBUtils.getConnection();
+
+				sql = "UPDATE todolist SET title = ?, detail = ?, priority = ?, limit_day = ? WHERE id = ?";
+
+				// INSERT命令の準備
+				ps = con.prepareStatement(sql);
+				// ポストデータの内容をセット
+				ps.setString(1, req.getParameter("title"));
+				ps.setString(2, req.getParameter("detail"));
+				ps.setString(3, req.getParameter("priority"));
+				if(req.getParameter("limitDay").equals("")) {
+					ps.setString(4, null);
+				} else {
+					ps.setString(4, req.getParameter("limitDay"));
+				}
+				ps.setString(5, req.getParameter("id"));
+
+				// 命令を実行
+				ps.executeUpdate();
+
+			} catch(Exception e){
+
+				throw new ServletException(e);
+
+			} finally {
+
+				try{
+					if(con != null){
+						con.close();
+					}
+					if(ps != null){
+						ps.close();
+					}
+				} catch(Exception e){
+
+				}
+			}
+
 		resp.sendRedirect("index.html");
+
+		}
 	}
 }

@@ -14,7 +14,6 @@ public class HTMLUtils {
 		} else {
 			return "★";
 		}
-
 	}
 
 	public static String check(String param, String value) {
@@ -35,7 +34,6 @@ public class HTMLUtils {
 		} else {
 			return "";
 		}
-
 	}
 
 }
