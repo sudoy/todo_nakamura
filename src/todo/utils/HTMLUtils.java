@@ -17,6 +17,16 @@ public class HTMLUtils {
 
 	}
 
+	public static String check(String param, String value) {
+		if(param == null && value.equals("3")) {
+			return "checked";
+		} else if (param.equals(value)) {
+			return "checked";
+		} else {
+			return "";
+		}
+	}
+
 	public static String formating(Date limitDay) {
 		// nullの場合、空白を返すようにする
 		if(limitDay != null) {

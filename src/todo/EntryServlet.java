@@ -30,25 +30,24 @@ public class EntryServlet extends HttpServlet {
 		List<String> errors = new ArrayList<String>();
 
 		// 題名のエラーチェック
-		if(title == null || title.trim().isEmpty()) {
-			errors.add("");
+		if(title.equals("")) {
+			errors.add("題名は必須入力です。");
 		} else if(title.length() > 100) {
-			errors.add("");
+			errors.add("題名は100文字以内にして下さい。");
 		}
 
 		// 詳細のエラーチェック、確認必須ではないが、NOTNULLのため
-		if(detail == null || detail.trim().isEmpty()) {
-			errors.add("");
+		if(detail.equals("")) {
+			errors.add("詳細は必須入力です。");
 		}
 
 		// 重要度のエラーチェック、先にint型にキャストする
-		int priInt = Integer.parseInt(priority);
-		if(priInt < 1 || 3 < priInt) {
-			errors.add("");
+		if(!priority.equals("1") && !priority.equals("2") && !priority.equals("3")) {
+			errors.add("不正なアクセスです。");
 		}
 
 		// 日付一致チェック
-		if(limitDay != null) {
+		if(!limitDay.equals("")) {
 			try {
 				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
 				df.setLenient(false);
@@ -61,7 +60,7 @@ public class EntryServlet extends HttpServlet {
 //			    }
 			} catch (Exception p) {
 				p.printStackTrace();
-				errors.add("");
+				errors.add("期限は「YYYY/MM/DD」形式で入力して下さい。");
 			}
 		}
 
@@ -74,14 +73,18 @@ public class EntryServlet extends HttpServlet {
 
 		req.setCharacterEncoding("UTF-8");
 
+		// バリデーションチェック
 		EntryServlet error = new EntryServlet();
 		List<String> errors = error.validate(req.getParameter("title"),
 				req.getParameter("detail"),
 				req.getParameter("priority"),
 				req.getParameter("limitDay"));
 
-		if(errors.isEmpty()) {
-			//errorリストにひとつもerrorがなかった場合、insert処理させる
+		if(errors.size() > 0) {
+			//errorリストに1つ以上、errorが含まれていた場合
+			req.setAttribute("errors", errors);
+			getServletContext().getRequestDispatcher("/WEB-INF/entry.jsp").forward(req, resp);
+		} else {
 
 			Connection con = null;
 			PreparedStatement ps = null;
@@ -97,10 +100,12 @@ public class EntryServlet extends HttpServlet {
 				ps.setString(1, req.getParameter("title"));
 				ps.setString(2, req.getParameter("detail"));
 				ps.setString(3, req.getParameter("priority"));
-				ps.setString(4, req.getParameter("limitDay"));
+				if(req.getParameter("limitDay").equals("")) {
+					ps.setString(4, null);
+				} else {
+					ps.setString(4, req.getParameter("limitDay"));
+				}
 				// 命令を実行
-
-				System.out.println(ps);
 				ps.executeUpdate();
 
 			} catch(Exception e){
@@ -120,10 +125,6 @@ public class EntryServlet extends HttpServlet {
 			}
 
 			resp.sendRedirect("index.html");
-
-		} else {
-			//errorリストに1つ以上、errorが含まれていた場合
-			resp.sendRedirect("entry.html");
 		}
 	}
 }
