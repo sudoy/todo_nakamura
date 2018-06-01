@@ -46,7 +46,7 @@
 			<label class="col-sm-2 control-label" for="limit_day">期限</label>
 			<div class="col-sm-10">
 				<input type="text" class="form-control" id="limit_day"
-					placeholder="期限" value="${todo.detail}">
+					placeholder="期限" value="${HTMLUtils.formating(todo.limitDay)}">
 			</div>
 		</div>
 		<div class="form-group">
