@@ -3,8 +3,9 @@ package todo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,17 +50,9 @@ public class EntryServlet extends HttpServlet {
 		// 日付一致チェック
 		if(!limitDay.equals("")) {
 			try {
-				DateFormat df = new SimpleDateFormat("yyyy/MM/dd");
-				df.setLenient(false);
-				String s1 = limitDay;
-				String s2 = df.format(df.parse(s1));
-//			    現在、ここの記述なくても動作可
-//			    if (s1.equals(s2)) {
-//			    } else {
-//			    	errors.add("");
-//			    }
+				LocalDate.parse(limitDay, DateTimeFormatter.ofPattern("uuuu/MM/dd")
+						.withResolverStyle(ResolverStyle.STRICT));
 			} catch (Exception p) {
-				p.printStackTrace();
 				errors.add("期限は「YYYY/MM/DD」形式で入力して下さい。");
 			}
 		}
