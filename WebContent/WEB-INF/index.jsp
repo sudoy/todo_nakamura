@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8"
 	import="todo.utils.HTMLUtils"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<jsp:include page="include_header.jsp"></jsp:include>
+<jsp:include page="include_header.jsp" />
 
 <div class="container">
 	<!-- todo area -->
@@ -34,4 +34,4 @@
 </div>
 <!-- end main -->
 
-<jsp:include page="include_footer.jsp"></jsp:include>
+<jsp:include page="include_footer.jsp" />

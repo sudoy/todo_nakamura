@@ -32,34 +32,7 @@
 	<div class="container">
 
 		<!-- alert area -->
-		<div class="alert alert-success alert-dismissible fade in"
-			role="alert">
-			<button type="button" class="close" data-dismiss="alert">
-				<span aria-hidden="true">×</span>
-			</button>
-			<h4>
-				<strong>完了しました！</strong>
-			</h4>
-			<ul>
-				<li>No.27 のTodoを更新しました。
-			</ul>
-		</div>
-
-		<c:if test="${errors.size() > 0}">
-			<div class="alert alert-danger alert-dismissible fade in"
-				role="alert">
-				<button type="button" class="close" data-dismiss="alert">
-					<span aria-hidden="true">×</span>
-				</button>
-				<h4>
-					<strong>エラーが発生しました！</strong>
-				</h4>
-				<ul>
-					<c:forEach var="error" items="${errors}">
-						<li>${error}</li>
-					</c:forEach>
-				</ul>
-			</div>
-		</c:if>
+		<jsp:include page="h_success.jsp" />
+		<jsp:include page="h_errors.jsp" />
 
 	</div>
