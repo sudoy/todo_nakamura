@@ -81,7 +81,7 @@ public class UpdateServlet extends HttpServlet {
 
 		// idのエラーチェック（不正防止
 		// ここいまStringしてるからな！！気をつけろよ！！
-		if(id.equals("")) {
+		if(id == null || id.equals("")) {
 			errors.add("存在しないIDです。");
 		}
 
@@ -98,7 +98,7 @@ public class UpdateServlet extends HttpServlet {
 		}
 
 		// 重要度のエラーチェック（不正防止
-		if(!priority.equals("1") && !priority.equals("2") && !priority.equals("3")) {
+		if(id == null || !priority.equals("1") && !priority.equals("2") && !priority.equals("3")) {
 			errors.add("不正なアクセスです。");
 		}
 
@@ -133,12 +133,6 @@ public class UpdateServlet extends HttpServlet {
 		if(errors.size() > 0) {
 			//errorリストに1つ以上、エラーが含まれていた場合
 			req.setAttribute("errors", errors);
-
-			for(String e : errors) {
-				System.out.println(e);
-			}
-			System.out.println(req.getParameter("limitDay"));
-
 			getServletContext().getRequestDispatcher("/WEB-INF/update.jsp").forward(req, resp);
 		} else {
 			// エラーがなかった場合
