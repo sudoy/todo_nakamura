@@ -69,7 +69,7 @@ public class IndexServlet extends HttpServlet {
 
 	}
 
-	//まだここは残しておく、全工程終了次第残すかは決める
+
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
