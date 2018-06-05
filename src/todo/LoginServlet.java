@@ -58,18 +58,18 @@ public class LoginServlet extends HttpServlet {
 				rs = ps.executeQuery();
 
 				if(rs.next()) {
-						User user = new User(
-								rs.getInt("id"),
-								rs.getString("name"),
-								rs.getString("email"),
-								rs.getString("password"));
+					User user = new User(
+							rs.getInt("id"),
+							rs.getString("name"),
+							rs.getString("email"),
+							rs.getString("password"));
 					// ログインセッションの保存
 					session.setAttribute("user", user);
 					resp.sendRedirect("index.html");
 				}else {
-				errors.add("メールアドレス、またはパスワードが間違っています。");
-				session.setAttribute("errors", errors);
-				getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+					errors.add("メールアドレス、またはパスワードが間違っています。");
+					session.setAttribute("errors", errors);
+					getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 				}
 
 			} catch(Exception e) {
@@ -86,8 +86,8 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		} else {
-		session.setAttribute("errors", errors);
-		getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+			session.setAttribute("errors", errors);
+			getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 		}
 
 	}
