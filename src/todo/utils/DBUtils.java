@@ -1,11 +1,15 @@
 package todo.utils;
 
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.sql.DataSource;
 
 public class DBUtils {
@@ -24,4 +28,19 @@ public class DBUtils {
 			con.close();
 		}
 	}
+
+
+	public static boolean checked(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+		HttpSession session = req.getSession();
+
+		if(session.getAttribute("user") == null) {
+			session.setAttribute("errors2", "ログインしてください。");
+			resp.sendRedirect("login.html");
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 }

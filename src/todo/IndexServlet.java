@@ -21,6 +21,11 @@ import todo.utils.DBUtils;
 public class IndexServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		if(!DBUtils.checked(req, resp)) {
+			return;
+		}
+
 		Connection con = null;
 		PreparedStatement ps = null;
 		String sql = null;
@@ -72,6 +77,10 @@ public class IndexServlet extends HttpServlet {
 
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+
+		if(!DBUtils.checked(req, resp)) {
+			return;
+		}
 
 		resp.sendRedirect("index.html");
 	}

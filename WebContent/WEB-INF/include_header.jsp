@@ -26,15 +26,18 @@
 			</div>
 
 			<!-- start login_bar -->
-			<div class="btn-group navbar-right navbar-text">
-				<button type="button" class="btn btn-info dropdown-toggle"
-					data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					${user.name} <span class="caret"></span>
-				</button>
-				<ul class="dropdown-menu">
-					<li><a href="logout.html">ログアウト</a></li>
-				</ul>
-			</div>
+
+			<c:if test="${user ne null}">
+				<div class="btn-group navbar-right navbar-text">
+					<button type="button" class="btn btn-info dropdown-toggle"
+						data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						${user.name} <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu">
+						<li><a href="logout.html">ログアウト</a></li>
+					</ul>
+				</div>
+			</c:if>
 		</div>
 	</nav>
 	<!-- end header -->

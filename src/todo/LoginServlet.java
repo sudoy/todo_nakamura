@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import todo.beans.User;
 import todo.utils.DBUtils;
 
 @WebServlet("/login.html")
@@ -26,17 +27,62 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
 		req.setCharacterEncoding("UTF-8");
-		HttpSession session = req.getSession(true);
+		HttpSession session = req.getSession();
 
 		String email = req.getParameter("email");
 		String pass = req.getParameter("pass");
 
+
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = null;
+		ResultSet rs = null;
+
 		boolean check = authUser(email, pass);
-		if(check) {
-			resp.sendRedirect("index.html");
-		} else{
-			session.setAttribute("errors2", "メールアドレス、またはパスワードが間違っています。");
-			getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+
+		if(check){
+
+			try {
+				con = DBUtils.getConnection();
+
+				sql = "SELECT id, name, email, password FROM users WHERE email = ? AND password = MD5(?)";
+				ps = con.prepareStatement(sql);
+
+				ps.setString(1, email);
+				ps.setString(2, pass);
+
+				rs = ps.executeQuery();
+
+				if(rs.next()) {
+						User user = new User(
+								rs.getInt("id"),
+								rs.getString("name"),
+								rs.getString("email"),
+								rs.getString("password"));
+					// ログインセッションの保存
+					session.setAttribute("user", user);
+					resp.sendRedirect("index.html");
+				}else {
+				session.setAttribute("errors2", "メールアドレス、またはパスワードが間違っています。");
+				getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
+				}
+
+			} catch(Exception e) {
+				throw new ServletException(e);
+			} finally {
+
+				try{
+					DBUtils.close(con);
+					if(ps != null){
+						ps.close();
+					}
+				} catch(Exception e){
+
+				}
+			}
+		} else {
+		session.setAttribute("errors2", "メールアドレス、またはパスワードを入力して下さい。");
+		getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 		}
 
 	}
@@ -46,42 +92,8 @@ public class LoginServlet extends HttpServlet {
 		if(email == null || email.equals("") || email.length() == 0 ||
 				pass == null || pass.equals("")|| pass.length() == 0) {
 			return false;
-		}
-
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = null;
-
-
-		try {
-			con = DBUtils.getConnection();
-
-			sql = "SELECT id, name, email, password FROM users WHERE email = ? && password = ?";
-			ps = con.prepareStatement(sql);
-
-			ps.setString(1, email);
-			ps.setString(2, pass);
-
-			ResultSet rs = ps.executeQuery();
-
-			if(rs.next()) {
-				return true;
-			}else {
-				return false;
-			}
-
-		} catch(Exception e) {
-			return false;
-		} finally {
-
-			try{
-				DBUtils.close(con);
-				if(ps != null){
-					ps.close();
-				}
-			} catch(Exception e){
-
-			}
+		} else {
+			return true;
 		}
 	}
 }

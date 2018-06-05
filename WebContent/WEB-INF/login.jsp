@@ -21,7 +21,7 @@
 			<label class="col-sm-3 control-label" for="pass">パスワード</label>
 			<div class="col-sm-7">
 				<input type="password" class="form-control" name="pass" id="pass"
-					placeholder="パスワード" value="${param.pass}">
+					placeholder="パスワード" value="">
 			</div>
 		</div>
 		<br>
