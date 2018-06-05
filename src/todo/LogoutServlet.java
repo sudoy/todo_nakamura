@@ -1,6 +1,8 @@
 package todo;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -22,7 +24,9 @@ public class LogoutServlet extends HttpServlet {
 
 		HttpSession session = req.getSession();
 		session.setAttribute("user", null);
-		session.setAttribute("error2", "ログアウトしました。");
+		List<String> success = new ArrayList<>();
+		success.add("ログアウトしました。");
+		session.setAttribute("success", success);
 		resp.sendRedirect("login.html");
 	}
 }

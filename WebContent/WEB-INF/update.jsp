@@ -2,7 +2,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <jsp:include page="include_header.jsp" />
 
-<div class="container">
+<!-- alert area -->
+		<jsp:include page="h_errors.jsp" />
 	<!-- entry area -->
 
 	<form class="form-horizontal" method="post" action="update.html">
@@ -62,7 +63,6 @@
 		</div>
 	</form>
 
-</div>
 <!-- end main -->
 
 <jsp:include page="include_footer.jsp" />

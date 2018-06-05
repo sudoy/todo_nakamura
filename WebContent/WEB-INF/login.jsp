@@ -6,7 +6,8 @@
 <!-- start main -->
 <div class="container form-signin">
 	<h4>ログイン</h4>
-	<jsp:include page="login_error.jsp" />
+	<jsp:include page="h_errors.jsp" />
+	<jsp:include page="h_success.jsp" />
 
 	<!-- password -->
 	<form class="form-horizontal" method="post" action="login.html">

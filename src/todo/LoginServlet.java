@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -38,9 +40,11 @@ public class LoginServlet extends HttpServlet {
 		String sql = null;
 		ResultSet rs = null;
 
-		boolean check = authUser(email, pass);
+		//バリデーションチェック
+		LoginServlet error = new LoginServlet();
+		List<String> errors = error.validate(email, pass);
 
-		if(check){
+		if(errors.size() == 0){
 
 			try {
 				con = DBUtils.getConnection();
@@ -63,7 +67,8 @@ public class LoginServlet extends HttpServlet {
 					session.setAttribute("user", user);
 					resp.sendRedirect("index.html");
 				}else {
-				session.setAttribute("errors2", "メールアドレス、またはパスワードが間違っています。");
+				errors.add("メールアドレス、またはパスワードが間違っています。");
+				session.setAttribute("errors", errors);
 				getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 				}
 
@@ -81,19 +86,24 @@ public class LoginServlet extends HttpServlet {
 				}
 			}
 		} else {
-		session.setAttribute("errors2", "メールアドレス、またはパスワードを入力して下さい。");
+		session.setAttribute("errors", errors);
 		getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(req, resp);
 		}
 
 	}
 
-	protected boolean authUser(String email, String pass) {
+	//追加）バリデーションチェック
+	private List<String> validate(String email, String pass) {
+		List<String> errors = new ArrayList<String>();
 
-		if(email == null || email.equals("") || email.length() == 0 ||
-				pass == null || pass.equals("")|| pass.length() == 0) {
-			return false;
-		} else {
-			return true;
+		if(email.equals("")) {
+			errors.add("メールアドレスは必須入力です。");
 		}
+
+		if(pass.equals("")) {
+			errors.add("パスワードは必須入力です。");
+		}
+
+		return errors;
 	}
 }

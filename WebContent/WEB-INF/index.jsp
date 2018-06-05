@@ -3,7 +3,8 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <jsp:include page="include_header.jsp" />
 
-<div class="container">
+<!-- alert area -->
+		<jsp:include page="h_success.jsp" />
 	<!-- todo area -->
 	<div class="table-responsive">
 		<table class="table table-hover ">
@@ -31,7 +32,7 @@
 	</div>
 	<a class="btn btn-primary" href="entry.html">追加</a>
 
-</div>
+
 <!-- end main -->
 
 <jsp:include page="include_footer.jsp" />

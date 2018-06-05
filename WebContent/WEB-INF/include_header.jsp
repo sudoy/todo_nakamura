@@ -44,9 +44,3 @@
 
 	<!-- start main -->
 	<div class="container">
-
-		<!-- alert area -->
-		<jsp:include page="h_success.jsp" />
-		<jsp:include page="h_errors.jsp" />
-
-	</div>

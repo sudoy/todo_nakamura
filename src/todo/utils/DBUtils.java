@@ -3,6 +3,8 @@ package todo.utils;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -35,7 +37,9 @@ public class DBUtils {
 		HttpSession session = req.getSession();
 
 		if(session.getAttribute("user") == null) {
-			session.setAttribute("errors2", "ログインしてください。");
+			List<String> errors = new ArrayList<>();
+			errors.add("ログインしてください。");
+			session.setAttribute("errors", errors);
 			resp.sendRedirect("login.html");
 			return false;
 		} else {

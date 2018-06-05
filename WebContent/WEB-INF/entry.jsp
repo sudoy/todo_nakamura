@@ -2,7 +2,9 @@
 	import="todo.utils.HTMLUtils"%>
 <jsp:include page="include_header.jsp" />
 
-<div class="container">
+<!-- alert area -->
+		<jsp:include page="h_errors.jsp" />
+
 	<!-- entry area -->
 	<form class="form-horizontal" method="post" action="entry.html">
 		<h4 class="page-header">
@@ -56,7 +58,6 @@
 		</div>
 	</form>
 
-</div>
 <!-- end main -->
 
 <jsp:include page="include_footer.jsp" />
